@@ -1,7 +1,8 @@
 const page = () => {
   return (
-    <div className="flex h-screen items-center justify-center"><h1 className="text-3xl text-brand">StoreIt - The only storage solution you need</h1></div>
-
+    <div className="flex-center h-screen">
+      <h1 className="h1">StoreIt - The only storage solution you need.</h1>
+    </div>
   );
 };
 
