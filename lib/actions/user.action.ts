@@ -33,7 +33,7 @@ const sendEmailOTP = async ({ email }: { email: string }) => {
   }
 };
 
-const createAccont = async ({
+export const createAccont = async ({
   fullName,
   email,
 }: {

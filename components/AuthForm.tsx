@@ -17,8 +17,9 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { createAccount, signInUser } from "@/lib/actions/user.actions";
+
 import OtpModal from "@/components/OTPModal";
+import { createAccont } from "@/lib/actions/user.action";
 
 type FormType = "sign-in" | "sign-up";
 
@@ -53,7 +54,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
     try {
       const user =
         type === "sign-up"
-          ? await createAccount({
+          ? await createAccont({
               fullName: values.fullName || "",
               email: values.email,
             })
@@ -150,7 +151,6 @@ const AuthForm = ({ type }: { type: FormType }) => {
               href={type === "sign-in" ? "/sign-up" : "/sign-in"}
               className="ml-1 font-medium text-brand"
             >
-             
               {type === "sign-in" ? "Sign Up" : "Sign In"}
             </Link>
           </div>
