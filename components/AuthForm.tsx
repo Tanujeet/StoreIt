@@ -13,13 +13,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import OtpModal from "@/components/OTPModal";
 import { createAccont } from "@/lib/actions/user.action";
+import OTPModal from "./OTPModal";
 
 type FormType = "sign-in" | "sign-up";
 
@@ -158,7 +159,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
       </Form>
 
       {accountId && (
-        <OtpModal email={form.getValues("email")} accountId={accountId} />
+        <OTPModal email={form.getValues("email")} accountId={accountId} />
       )}
     </>
   );
