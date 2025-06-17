@@ -19,7 +19,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { createAccont } from "@/lib/actions/user.action";
+import { createAccount, signInUser } from "@/lib/actions/user.action";
 import OTPModal from "./OTPModal";
 
 type FormType = "sign-in" | "sign-up";
@@ -55,7 +55,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
     try {
       const user =
         type === "sign-up"
-          ? await createAccont({
+          ? await createAccount({
               fullName: values.fullName || "",
               email: values.email,
             })
