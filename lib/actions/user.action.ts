@@ -30,7 +30,6 @@ export const sendEmailOTP = async ({ email }: { email: string }) => {
 
   try {
     const session = await account.createEmailToken(ID.unique(), email);
-
     return session.userId;
   } catch (error) {
     handleError(error, "Failed to send email OTP");
@@ -38,10 +37,10 @@ export const sendEmailOTP = async ({ email }: { email: string }) => {
 };
 
 export const createAccount = async ({
-  fullName,
+  fullname,
   email,
 }: {
-  fullName: string;
+  fullname: string;
   email: string;
 }) => {
   const existingUser = await getUserByEmail(email);
@@ -57,7 +56,7 @@ export const createAccount = async ({
       appwriteConfig.usersCollectionID,
       ID.unique(),
       {
-        fullName,
+        fullname,
         email,
         avatar: avatarPlaceholderUrl,
         accountId,
@@ -130,7 +129,6 @@ export const signInUser = async ({ email }: { email: string }) => {
   try {
     const existingUser = await getUserByEmail(email);
 
-    // User exists, send OTP
     if (existingUser) {
       await sendEmailOTP({ email });
       return parseStringify({ accountId: existingUser.accountId });
