@@ -1,7 +1,13 @@
+"use client";
+
+import { navItems } from "@/constants";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
+  const pathname = usePathname;
   return (
     <aside className="sidebar">
       <Link href="/">
@@ -21,7 +27,21 @@ const Sidebar = () => {
         />
       </Link>
       <nav className="sidebar-nav">
-        <ul className="flex flex-1 flex-col gap-6"></ul>
+        <ul className="flex flex-1 flex-col gap-6">
+          {navItems.map(({ url, name, icon }) => (
+            <Link key={name} href={url} className="w-full ">
+              <li
+                className={cn(
+                  "sidebar-nav-item",
+                  pathname === url && "shad-active"
+                )}
+              >
+                <Image src={icon} alt={name} width={24} height={24} />
+                <p className="hidden lg:block">{name}</p>
+              </li>
+            </Link>
+          ))}
+        </ul>
       </nav>
     </aside>
   );
