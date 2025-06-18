@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Search from "./Search";
+import FileUploader from "./FileUploader";
 
 const Header = () => {
   return (
     <header className="header">
-      Search
+      <Search />
       <div className="header-wrapper">
-        File uploader
+        <FileUploader />
         <form>
           <Button type="submit" className="sign-out-button">
             <Image
