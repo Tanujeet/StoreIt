@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navItems } from "@/constants";
 import { Button } from "@/components/ui/button";
+import FileUploader from "./FileUploader";
 interface Props {
   fullname: string;
   avatar: string;
@@ -87,15 +88,19 @@ const MobileNavigation = ({
           </nav>
           <Separator className="my-5 bg-light-200/20" />
           <div className="flex flex-col justify-between gap-5 pb-5">
-            File Uploader
-            <Button type="submit" className="sign-out-button">
+            <FileUploader />
+            <Button
+              type="submit"
+              className="moibile-sign-out-button"
+              onClick={() => {}}
+            >
               <Image
                 src="/assets/icons/logout.svg"
                 alt="logo"
                 width={24}
                 height={24}
-                className="w-6"
-              />{" "}
+              />
+              <p>LogOut</p>
             </Button>
           </div>
         </SheetContent>
