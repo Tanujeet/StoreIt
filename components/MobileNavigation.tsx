@@ -8,9 +8,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { navItems } from "@/constants";
 interface Props {
   fullname: string;
   avatar: string;
@@ -25,8 +29,9 @@ const MobileNavigation = ({
   ownerId,
   accountId,
 }: Props) => {
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
+
   return (
     <header className="mobile-header">
       <Image
@@ -57,13 +62,28 @@ const MobileNavigation = ({
               />
               <div className="sm:hidden lg:block">
                 <p className="subtitle-2 capitalize">{fullname}</p>
+                <p className="caption">{email}</p>
               </div>
             </div>
+            <Separator className="mb-4 bg-light-200/20" />
           </SheetTitle>
-          <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </SheetDescription>
+          <nav className="mobile-nav">
+            <ul className="mobile-nav-list">
+              {navItems.map(({ url, name, icon }) => (
+                <Link key={name} href={url} className="w-full ">
+                  <li
+                    className={cn(
+                      "sidebar-nav-item",
+                      pathname === url && "shad-active"
+                    )}
+                  >
+                    <Image src={icon} alt={name} width={24} height={24} />
+                    <p className="hidden lg:block">{name}</p>
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          </nav>
         </SheetContent>
       </Sheet>
     </header>
