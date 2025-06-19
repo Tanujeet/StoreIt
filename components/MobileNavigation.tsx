@@ -15,6 +15,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navItems } from "@/constants";
+import { Button } from "@/components/ui/button";
 interface Props {
   fullname: string;
   avatar: string;
@@ -84,6 +85,19 @@ const MobileNavigation = ({
               ))}
             </ul>
           </nav>
+          <Separator className="my-5 bg-light-200/20" />
+          <div className="flex flex-col justify-between gap-5 pb-5">
+            File Uploader
+            <Button type="submit" className="sign-out-button">
+              <Image
+                src="/assets/icons/logout.svg"
+                alt="logo"
+                width={24}
+                height={24}
+                className="w-6"
+              />{" "}
+            </Button>
+          </div>
         </SheetContent>
       </Sheet>
     </header>
