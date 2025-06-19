@@ -78,7 +78,7 @@ const MobileNavigation = ({
                     )}
                   >
                     <Image src={icon} alt={name} width={24} height={24} />
-                    <p className="hidden lg:block">{name}</p>
+                    <p>{name}</p>
                   </li>
                 </Link>
               ))}
