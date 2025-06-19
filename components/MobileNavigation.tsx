@@ -73,7 +73,7 @@ const MobileNavigation = ({
                 <Link key={name} href={url} className="w-full ">
                   <li
                     className={cn(
-                      "sidebar-nav-item",
+                      "mobile-nav-item",
                       pathname === url && "shad-active"
                     )}
                   >
