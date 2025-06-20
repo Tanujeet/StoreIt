@@ -77,7 +77,7 @@ const MobileNavigation = ({
                   <li
                     className={cn(
                       "mobile-nav-item",
-                      pathname === url && "shad-active"
+                      pathname === url && "shad-active",
                     )}
                   >
                     <Image src={icon} alt={name} width={24} height={24} />
