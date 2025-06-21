@@ -77,7 +77,7 @@ const MobileNavigation = ({
                   <li
                     className={cn(
                       "mobile-nav-item",
-                      pathname === url && "shad-active",
+                      pathname === url && "shad-active"
                     )}
                   >
                     <Image src={icon} alt={name} width={24} height={24} />
@@ -89,7 +89,7 @@ const MobileNavigation = ({
           </nav>
           <Separator className="my-5 bg-light-200/20" />
           <div className="flex flex-col justify-between gap-5 pb-5">
-            <FileUploader />
+            <FileUploader ownerId={ownerId} accountId={accountId} />
             <Button
               type="submit"
               className="moibile-sign-out-button"
