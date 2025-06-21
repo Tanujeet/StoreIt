@@ -8,6 +8,7 @@ import { constructFileUrl, getFileType, parseStringify } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "./user.action";
 
+
 const handleError = (error: unknown, message: string) => {
   console.log(error, message);
   throw error;
@@ -27,7 +28,7 @@ export const uploadFile = async ({
     const bucketFile = await storage.createFile(
       appwriteConfig.bucketID,
       ID.unique(),
-      inputFile,
+      inputFile
     );
 
     const fileDocument = {
@@ -47,7 +48,7 @@ export const uploadFile = async ({
         appwriteConfig.databaseID,
         appwriteConfig.filesCollectionID,
         ID.unique(),
-        fileDocument,
+        fileDocument
       )
       .catch(async (error: unknown) => {
         await storage.deleteFile(appwriteConfig.bucketID, bucketFile.$id);
@@ -66,7 +67,7 @@ const createQueries = (
   types: string[],
   searchText: string,
   sort: string,
-  limit?: number,
+  limit?: number
 ) => {
   const queries = [
     Query.or([
@@ -83,7 +84,7 @@ const createQueries = (
     const [sortBy, orderBy] = sort.split("-");
 
     queries.push(
-      orderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy),
+      orderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
     );
   }
 
@@ -108,7 +109,7 @@ export const getFiles = async ({
     const files = await database.listDocuments(
       appwriteConfig.databaseID,
       appwriteConfig.filesCollectionID,
-      queries,
+      queries
     );
 
     console.log({ files });
@@ -134,7 +135,7 @@ export const renameFile = async ({
       fileId,
       {
         name: newName,
-      },
+      }
     );
 
     revalidatePath(path);
@@ -158,7 +159,7 @@ export const updateFileUsers = async ({
       fileId,
       {
         users: emails,
-      },
+      }
     );
 
     revalidatePath(path);
@@ -179,7 +180,7 @@ export const deleteFile = async ({
     const deletedFile = await database.deleteDocument(
       appwriteConfig.databaseID,
       appwriteConfig.filesCollectionID,
-      fileId,
+      fileId
     );
 
     if (deletedFile) {
@@ -203,7 +204,7 @@ export async function getTotalSpaceUsed() {
     const files = await database.listDocuments(
       appwriteConfig.databaseID,
       appwriteConfig.filesCollectionID,
-      [Query.equal("owner", [currentUser.$id])],
+      [Query.equal("owner", [currentUser.$id])]
     );
 
     const totalSpace = {
