@@ -18,6 +18,7 @@ interface Props {
   className?: string;
 }
 
+
 const FileUploader = ({ ownerId, accountId, className }: Props) => {
   const [files, setFiles] = useState<File[]>([]);
   const path = usePathname();
