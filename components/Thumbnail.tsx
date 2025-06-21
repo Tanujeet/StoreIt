@@ -28,7 +28,7 @@ const Thumbnail = ({
         className={cn(
           "size-8 object-contain",
           imageClassName,
-          isImage && "thumbnail-image"
+          isImage && "thumbnail-image",
         )}
       />
     </figure>
