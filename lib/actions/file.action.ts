@@ -96,7 +96,7 @@ export const getFiles = async ({
   searchText = "",
   sort = "$createdAt-desc",
   limit,
-}: GetFilesProps) => {
+}: Partial<GetFilesProps> = {}) => {
   const { database } = await createAdminClient();
 
   try {
