@@ -3,7 +3,7 @@ import { Models } from "node-appwrite";
 import Thumbnail from "./Thumbnail";
 import ActionsDropdown from "./ActionsDropdown";
 import { convertFileSize } from "@/lib/utils";
-import FormattedDDateTime from "./FormattedDDateTime";
+import FormattedDateTime from "./FormattedDateTime";
 
 const Card = ({ file }: { file: Models.Document }) => {
   return (
@@ -23,7 +23,7 @@ const Card = ({ file }: { file: Models.Document }) => {
       </div>
       <div className="file-card-details">
         <p className="subtitle-2 line-clamp-1">{file.name}</p>
-        <FormattedDDateTime />
+        <FormattedDateTime />
       </div>
       {file.name}
     </Link>
