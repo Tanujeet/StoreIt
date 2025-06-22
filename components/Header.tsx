@@ -5,6 +5,7 @@ import Search from "@/components/Search";
 import FileUploader from "@/components/FileUploader";
 import { signOutUser } from "@/lib/actions/user.action";
 
+
 const Header = ({
   userId,
   accountId,
