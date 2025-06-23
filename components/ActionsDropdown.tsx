@@ -42,12 +42,9 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
                 setAction(actionItem);
 
                 if (
-                  [
-                    "Rename",
-                    "Share",
-                    "Delete",
-                    "Details".includes(actionItem.value),
-                  ]
+                  ["Rename", "Share", "Delete", "Details"].includes(
+                    actionItem.value
+                  )
                 ) {
                   setisModelOpen(true);
                 }
