@@ -10,7 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { actionsDropdownItems } from "@/constants";
+import { constructDownloadUrl } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import { Models } from "node-appwrite";
 import { useState } from "react";
 
@@ -50,7 +52,7 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
                 }
               }}
             >
-              {actionItem.label}
+              <Link href={constructDownloadUrl(file.bucketFileId)} />
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
