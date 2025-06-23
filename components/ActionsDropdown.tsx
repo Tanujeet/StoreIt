@@ -20,6 +20,10 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [isDropdownOpen, setisDropdownOpen] = useState(false);
   const [action, setAction] = useState<ActionType | null>(null);
+
+  const renderDialogContent = () => {
+    return <DropdownMenuContent>Dialoge</DropdownMenuContent>;
+  };
   return (
     <Dialog open={isModelOpen} onOpenChange={setisModelOpen}>
       <DropdownMenu open={isDropdownOpen} onOpenChange={setisDropdownOpen}>
@@ -79,6 +83,7 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
+      {renderDialogContent()}
     </Dialog>
   );
 };
