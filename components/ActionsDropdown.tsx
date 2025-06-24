@@ -1,6 +1,14 @@
 "use client";
 
-import { Dialog } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,14 +23,43 @@ import Image from "next/image";
 import Link from "next/link";
 import { Models } from "node-appwrite";
 import { useState } from "react";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 const ActionsDropdown = ({ file }: { file: Models.Document }) => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [isDropdownOpen, setisDropdownOpen] = useState(false);
   const [action, setAction] = useState<ActionType | null>(null);
+  const [name, setName] = useState(file.name);
 
   const renderDialogContent = () => {
-    return <DropdownMenuContent>Dialoge</DropdownMenuContent>;
+    if (!action) return null;
+
+    const { value, label } = action;
+    return (
+      <DialogContent className="shad-dialog button">
+        <DialogHeader className="flex flex-col gap-3">
+          <DialogTitle className="text-center text-light-100">
+            {label}
+          </DialogTitle>
+          {value === "rename" && (
+            <Input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          )}
+        </DialogHeader>
+        {["rename", "delete", "share"].includes(value) && (
+          <DialogFooter className="flex flex-col gap-3 md:flex-row">
+            <Button>Cancel</Button>
+            <Button>
+              <p className="capitalize">{value}</p>
+            </Button>
+          </DialogFooter>
+        )}
+      </DialogContent>
+    );
   };
   return (
     <Dialog open={isModelOpen} onOpenChange={setisModelOpen}>
