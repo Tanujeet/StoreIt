@@ -112,8 +112,22 @@ export const getFiles = async ({
       queries
     );
 
-    console.log({ files });
-    return parseStringify(files);
+    // Generate correct preview URLs
+    const { storage } = await createAdminClient();
+
+    const filesWithPreview = await Promise.all(
+      files.documents.map(async (file) => ({
+        ...file,
+        previewUrl: (
+          await storage.getFileView(appwriteConfig.bucketID, file.bucketFileId)
+        ).toString(),
+      }))
+    );
+
+    return {
+      ...files,
+      documents: filesWithPreview,
+    };
   } catch (error) {
     handleError(error, "Failed to get files");
   }
