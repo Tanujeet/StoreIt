@@ -22,7 +22,7 @@ const Thumbnail = ({
     <figure>
       <Image
         src={
-          isImage && url && url.startsWith("http")
+          isImage && url && url.startsWith("https")
             ? url
             : getFileIcon(extension, type)
         }

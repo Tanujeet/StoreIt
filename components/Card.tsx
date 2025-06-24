@@ -6,6 +6,7 @@ import { convertFileSize } from "@/lib/utils";
 import FormattedDateTime from "./FormattedDateTime";
 
 const Card = ({ file }: { file: Models.Document }) => {
+  console.log("🧩 File: ", file);
   return (
     <Link href={file.url} target="_blank" className="file-card">
       <div className="flex justify-between">

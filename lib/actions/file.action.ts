@@ -115,14 +115,11 @@ export const getFiles = async ({
     // Generate correct preview URLs
     const { storage } = await createAdminClient();
 
-    const filesWithPreview = await Promise.all(
-      files.documents.map(async (file) => ({
-        ...file,
-        previewUrl: (
-          await storage.getFileView(appwriteConfig.bucketID, file.bucketFileId)
-        ).toString(),
-      }))
-    );
+    const filesWithPreview = files.documents.map((file) => ({
+      ...file,
+      previewUrl: `${appwriteConfig.endpointUrl}/storage/buckets/${appwriteConfig.bucketID}/files/${file.bucketFileId}/view?project=${appwriteConfig.projectID}`,
+    }));
+    
 
     return {
       ...files,
