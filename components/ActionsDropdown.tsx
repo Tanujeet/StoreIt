@@ -3,11 +3,9 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   DropdownMenu,
@@ -26,13 +24,22 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
+import {
+  deleteFile,
+  renameFile,
+  updateFileUsers,
+} from "@/lib/actions/file.action";
+import { usePathname } from "next/navigation";
+
 const ActionsDropdown = ({ file }: { file: Models.Document }) => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [isDropdownOpen, setisDropdownOpen] = useState(false);
   const [action, setAction] = useState<ActionType | null>(null);
   const [name, setName] = useState(file.name);
   const [isLoading, setIsLoading] = useState(false);
+  const [emails, setEmails] = useState<string[]>([]);
 
+  const path = usePathname();
   const closeAllModals = () => {
     setisModelOpen(false);
     setisDropdownOpen(false);
@@ -40,7 +47,25 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
     setName(file.name);
   };
 
-  const handleAction = () => {};
+  const handleAction = async () => {
+    if (!action) return;
+    setIsLoading(true);
+    let success = false;
+
+    const actions = {
+      rename: () =>
+        renameFile({ fileId: file.$id, name, extension: file.extension, path }),
+      share: () => updateFileUsers({ fileId: file.$id, emails, path }),
+      delete: () =>
+        deleteFile({ fileId: file.$id, bucketFileId: file.bucketFileId, path }),
+    };
+
+    success = await actions[action.value as keyof typeof actions]();
+
+    if (success) closeAllModals();
+
+    setIsLoading(false);
+  };
 
   const renderDialogContent = () => {
     if (!action) return null;
