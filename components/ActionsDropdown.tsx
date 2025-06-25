@@ -117,7 +117,11 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter className="flex flex-col gap-3 md:flex-row">
-            <Button onClick={closeAllModals} className="modal-cancel-button">
+            <Button
+              onClick={closeAllModals}
+              className="modal-cancel-button"
+              type="button"
+            >
               Cancel
             </Button>
             <Button
@@ -165,7 +169,6 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-
                 setAction(actionItem);
 
                 if (
@@ -192,7 +195,10 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
                   {actionItem.label}
                 </Link>
               ) : (
-                <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  className="flex items-center gap-2 w-full text-left"
+                >
                   <Image
                     src={actionItem.icon}
                     alt={actionItem.label}
@@ -200,7 +206,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
                     height={30}
                   />
                   {actionItem.label}
-                </div>
+                </button>
               )}
             </DropdownMenuItem>
           ))}
