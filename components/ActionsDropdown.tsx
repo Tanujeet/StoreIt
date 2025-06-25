@@ -110,25 +110,17 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
           )}
           {value === "delete" && (
             <p className="delete-confirmation">
-              Are you sure you want to delete
+              Are you sure you want to delete{` `}
               <span className="delete-file-name">{file.name}</span>?
             </p>
           )}
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter className="flex flex-col gap-3 md:flex-row">
-            <Button
-              onClick={closeAllModals}
-              className="modal-cancel-button"
-              type="button"
-            >
+            <Button onClick={closeAllModals} className="modal-cancel-button">
               Cancel
             </Button>
-            <Button
-              onClick={handleAction}
-              className="modal-submit-button"
-              type="button"
-            >
+            <Button onClick={handleAction} className="modal-submit-button">
               <p className="capitalize">{value}</p>
               {isLoading && (
                 <Image
@@ -166,11 +158,9 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
             <DropdownMenuItem
               key={actionItem.value}
               className="shad-dropdown-item"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log("Clicked on:", actionItem.value); // ✅ Add this
+              onClick={() => {
                 setAction(actionItem);
+
                 if (
                   ["rename", "share", "delete", "details"].includes(
                     actionItem.value
@@ -195,10 +185,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
                   {actionItem.label}
                 </Link>
               ) : (
-                <button
-                  type="button"
-                  className="flex items-center gap-2 w-full text-left"
-                >
+                <div className="flex items-center gap-2">
                   <Image
                     src={actionItem.icon}
                     alt={actionItem.label}
@@ -206,7 +193,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
                     height={30}
                   />
                   {actionItem.label}
-                </button>
+                </div>
               )}
             </DropdownMenuItem>
           ))}
