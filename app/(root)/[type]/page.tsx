@@ -6,6 +6,7 @@ import { Models } from "node-appwrite";
 const page = async ({ params }: SearchParamProps) => {
   const type = ((await params)?.type as string) || "";
   const files = await getFiles();
+  const fileList = files?.documents ?? [];
 
   return (
     <div className="page-container">
@@ -21,9 +22,9 @@ const page = async ({ params }: SearchParamProps) => {
           </div>
         </div>
       </section>
-      {files?.documents?.length > 0 ? (
+      {fileList.length > 0 ? (
         <section className="file-list">
-          {files.documents.map((file: Models.Document) => (
+          {fileList.map((file: Models.Document) => (
             <Card key={file.$id} file={file} />
           ))}
         </section>
