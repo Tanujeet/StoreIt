@@ -110,7 +110,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
           )}
           {value === "delete" && (
             <p className="delete-confirmation">
-              Are you sure you want to delete{` `}
+              Are you sure you want to delete
               <span className="delete-file-name">{file.name}</span>?
             </p>
           )}
@@ -120,7 +120,11 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
             <Button onClick={closeAllModals} className="modal-cancel-button">
               Cancel
             </Button>
-            <Button onClick={handleAction} className="modal-submit-button">
+            <Button
+              onClick={handleAction}
+              className="modal-submit-button"
+              type="button"
+            >
               <p className="capitalize">{value}</p>
               {isLoading && (
                 <Image
