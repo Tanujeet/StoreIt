@@ -169,8 +169,8 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                console.log("Clicked on:", actionItem.value); // ✅ Add this
                 setAction(actionItem);
-
                 if (
                   ["rename", "share", "delete", "details"].includes(
                     actionItem.value
