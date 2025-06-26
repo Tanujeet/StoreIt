@@ -1,34 +1,40 @@
 "use client";
+
+import React, { useEffect, useState } from "react";
+
 import Image from "next/image";
-import { Input } from "./ui/input";
-import { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getFiles } from "@/lib/actions/file.action";
 import { Models } from "node-appwrite";
+import Thumbnail from "@/components/Thumbnail";
+import FormattedDateTime from "@/components/FormattedDateTime";
 import { useDebounce } from "use-debounce";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Thumbnail from "./Thumbnail";
-import FormattedDateTime from "./FormattedDateTime";
-
 const Search = () => {
   const [query, setQuery] = useState("");
-  const searchParam = useSearchParams();
-  const searchQuery = searchParam.get("query") || "";
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("query") || "";
   const [results, setResults] = useState<Models.Document[]>([]);
-  const [debouncedQuery] = useDebounce(query, 300);
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const path = usePathname();
+  const [debouncedQuery] = useDebounce(query, 300);
 
   useEffect(() => {
     const fetchFiles = async () => {
       if (debouncedQuery.length === 0) {
         setResults([]);
         setOpen(false);
-        return router.push(path.replace(searchParam.toString(), ""));
+        return router.push(path.replace(searchParams.toString(), ""));
       }
+
       const files = await getFiles({ types: [], searchText: debouncedQuery });
+      setResults(files.documents);
+      setOpen(true);
     };
-  });
+
+    fetchFiles();
+  }, [debouncedQuery]);
 
   useEffect(() => {
     if (!searchQuery) {
@@ -56,10 +62,11 @@ const Search = () => {
         />
         <Input
           value={query}
-          placeholder="Search...."
+          placeholder="Search..."
           className="search-input"
           onChange={(e) => setQuery(e.target.value)}
         />
+
         {open && (
           <ul className="search-result">
             {results.length > 0 ? (
