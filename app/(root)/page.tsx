@@ -5,27 +5,29 @@ import { Models } from "node-appwrite";
 import { Separator } from "@/components/ui/separator";
 import { getFiles, getTotalSpaceUsed } from "@/lib/actions/file.action";
 import { convertFileSize, getUsageSummary } from "@/lib/utils";
-import Chart from "@/components/Chart";
+
 import FormattedDateTime from "@/components/FormattedDateTime";
 import Thumbnail from "@/components/Thumbnail";
 import ActionDropdown from "@/components/ActionsDropdown";
+import { Chart } from "@/components/Chart";
 
 const Dashboard = async () => {
-  // Parallel requests
-  const [files, totalSpace] = await Promise.all([
+  const [filesResult, totalSpaceResult] = await Promise.all([
     getFiles({ types: [], limit: 10 }),
     getTotalSpaceUsed(),
   ]);
 
-  // Get usage summary
+  const files = filesResult ?? { documents: [], total: 0 };
+  const totalSpace = totalSpaceResult ?? { used: 0, size: 0 };
   const usageSummary = getUsageSummary(totalSpace);
 
   return (
     <div className="dashboard-container">
+      {/* Storage usage chart */}
       <section>
         <Chart used={totalSpace.used} />
 
-        {/* Uploaded file type summaries */}
+        {/* File type summaries */}
         <ul className="dashboard-summary-list">
           {usageSummary.map((summary) => (
             <Link
@@ -59,9 +61,10 @@ const Dashboard = async () => {
         </ul>
       </section>
 
-      {/* Recent files uploaded */}
+      {/* Recent files list */}
       <section className="dashboard-recent-files">
         <h2 className="h3 xl:h2 text-light-100">Recent files uploaded</h2>
+
         {files.documents.length > 0 ? (
           <ul className="mt-5 flex flex-col gap-5">
             {files.documents.map((file: Models.Document) => (
@@ -76,7 +79,6 @@ const Dashboard = async () => {
                   extension={file.extension}
                   url={file.url}
                 />
-
                 <div className="recent-file-details">
                   <div className="flex flex-col gap-1">
                     <p className="recent-file-name">{file.name}</p>

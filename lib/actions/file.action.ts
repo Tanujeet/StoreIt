@@ -225,24 +225,49 @@ export async function getTotalSpaceUsed() {
       audio: { size: 0, latestDate: "" },
       other: { size: 0, latestDate: "" },
       used: 0,
-      all: 2 * 1024 * 1024 * 1024 /* 2GB available bucket storage */,
+      all: 2 * 1024 * 1024 * 1024, // 2GB
     };
 
+    type FileCategory = "image" | "document" | "video" | "audio" | "other";
+
     files.documents.forEach((file) => {
-      const fileType = file.type as FileType;
-      totalSpace[fileType].size += file.size;
+      const fileType = file.type as FileCategory;
+
+      // Default to 'other' if not a known type
+      const targetType: FileCategory = [
+        "image",
+        "document",
+        "video",
+        "audio",
+        "other",
+      ].includes(fileType)
+        ? fileType
+        : "other";
+
+      // Now it's guaranteed to have .size and .latestDate
+      totalSpace[targetType].size += file.size;
       totalSpace.used += file.size;
 
-      if (
-        !totalSpace[fileType].latestDate ||
-        new Date(file.$updatedAt) > new Date(totalSpace[fileType].latestDate)
-      ) {
-        totalSpace[fileType].latestDate = file.$updatedAt;
+      const currentLatest = totalSpace[targetType].latestDate;
+      const updatedDate = file.$updatedAt;
+
+      if (!currentLatest || new Date(updatedDate) > new Date(currentLatest)) {
+        totalSpace[targetType].latestDate = updatedDate;
       }
     });
 
     return parseStringify(totalSpace);
   } catch (error) {
-    handleError(error, "Error calculating total space used:, ");
+    handleError(error, "Error calculating total space used:");
+    // ✅ Return fallback to prevent crashes
+    return {
+      image: { size: 0, latestDate: "" },
+      document: { size: 0, latestDate: "" },
+      video: { size: 0, latestDate: "" },
+      audio: { size: 0, latestDate: "" },
+      other: { size: 0, latestDate: "" },
+      used: 0,
+      all: 2 * 1024 * 1024 * 1024,
+    };
   }
 }
