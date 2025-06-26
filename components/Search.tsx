@@ -29,7 +29,13 @@ const Search = () => {
       }
 
       const files = await getFiles({ types: [], searchText: debouncedQuery });
-      setResults(files.documents);
+
+      if (files && Array.isArray(files.documents)) {
+        setResults(files.documents);
+      } else {
+        setResults([]);
+      }
+
       setOpen(true);
     };
 
