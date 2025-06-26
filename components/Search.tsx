@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { useEffect, useState } from "react";
-
 import { getFiles } from "@/lib/actions/file.action";
 import { Models } from "node-appwrite";
 import { useDebounce } from "use-debounce";
